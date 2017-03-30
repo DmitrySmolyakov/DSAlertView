@@ -1,0 +1,22 @@
+{
+  "name": "DSAlertView",
+  "version": "0.1.0",
+  "summary": "A short description of DSAlertView.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/vinclai@yandex.ru/DSAlertView",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "vinclai@yandex.ru": "dm.smolyakov@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/vinclai@yandex.ru/DSAlertView.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "DSAlertView/Classes/**/*"
+}
