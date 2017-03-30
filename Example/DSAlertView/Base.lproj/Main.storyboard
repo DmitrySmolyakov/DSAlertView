@@ -20,11 +20,56 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGD-Nh-s90">
+                                <rect key="frame" x="164" y="318" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="showController:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7mp-JI-XS2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IGD-Nh-s90" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="E5o-ua-eqo"/>
+                            <constraint firstItem="IGD-Nh-s90" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="OaM-SR-FNH"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Showed View Controller Example-->
+        <scene sceneID="3Yg-gr-yX9">
+            <objects>
+                <viewController storyboardIdentifier="ShowedViewControllerExample" id="Nfg-mW-RtZ" customClass="ShowedViewControllerExample" customModule="DSAlertView_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Y61-KH-pWb"/>
+                        <viewControllerLayoutGuide type="bottom" id="N4O-Yy-UW3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p7S-v3-A3h">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dafklj adsfkljadsfkl jadsklfjds fadjksfj adslfjadsfjk  adsfads fadsfads fads fadsf" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhm-3D-yqY">
+                                <rect key="frame" x="10" y="30" width="355" height="627"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nhm-3D-yqY" secondAttribute="trailing" constant="10" id="3el-1b-MqM"/>
+                            <constraint firstItem="nhm-3D-yqY" firstAttribute="top" secondItem="Y61-KH-pWb" secondAttribute="bottom" constant="10" id="cAs-v0-7zS"/>
+                            <constraint firstItem="N4O-Yy-UW3" firstAttribute="top" secondItem="nhm-3D-yqY" secondAttribute="bottom" constant="10" id="fFg-aP-UrB"/>
+                            <constraint firstItem="nhm-3D-yqY" firstAttribute="leading" secondItem="p7S-v3-A3h" secondAttribute="leading" constant="10" id="lb9-g5-T4b"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZOr-km-QBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="789.60000000000002" y="42.728635682158924"/>
         </scene>
     </scenes>
 </document>

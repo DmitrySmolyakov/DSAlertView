@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1870CE771E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -28,7 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2663C16834F05B2D44265909 /* DSAlertView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = DSAlertView.podspec; path = ../DSAlertView.podspec; sourceTree = "<group>"; };
+		1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowedViewControllerExample.swift; sourceTree = "<group>"; };
+		2663C16834F05B2D44265909 /* DSAlertView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DSAlertView.podspec; path = ../DSAlertView.podspec; sourceTree = "<group>"; };
 		2814EC8E053871BD321A5D5F /* Pods-DSAlertView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DSAlertView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DSAlertView_Tests/Pods-DSAlertView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4635505A6690F0CDE92C0111 /* Pods_DSAlertView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DSAlertView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5089A00DF9354E63F9D17C6E /* Pods-DSAlertView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DSAlertView_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DSAlertView_Tests/Pods-DSAlertView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -42,8 +44,8 @@
 		607FACE51AFB9204008FA782 /* DSAlertView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSAlertView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		9A0FF4534E619FA447C8C8A2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		9E43074C915AF69CB751AE55 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		9A0FF4534E619FA447C8C8A2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		9E43074C915AF69CB751AE55 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C53548BAF0895E58A09D24C2 /* Pods-DSAlertView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DSAlertView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DSAlertView_Example/Pods-DSAlertView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D165F004BF52D3C65894E03E /* Pods_DSAlertView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DSAlertView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E851C715748EE08B84B836DA /* Pods-DSAlertView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DSAlertView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DSAlertView_Example/Pods-DSAlertView_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -362,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				1870CE771E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

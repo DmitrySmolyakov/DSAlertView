@@ -1,9 +1,9 @@
 # DSAlertView
 
-[![CI Status](http://img.shields.io/travis/vinclai@yandex.ru/DSAlertView.svg?style=flat)](https://travis-ci.org/vinclai@yandex.ru/DSAlertView)
-[![Version](https://img.shields.io/cocoapods/v/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
-[![License](https://img.shields.io/cocoapods/l/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
-[![Platform](https://img.shields.io/cocoapods/p/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
+#[![CI Status](http://img.shields.io/travis/vinclai@yandex.ru/DSAlertView.svg?style=flat)](https://travis-ci.org/vinclai@yandex.ru/DSAlertView)
+#[![Version](https://img.shields.io/cocoapods/v/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
+#[![License](https://img.shields.io/cocoapods/l/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
+#[![Platform](https://img.shields.io/cocoapods/p/DSAlertView.svg?style=flat)](http://cocoapods.org/pods/DSAlertView)
 
 ## Example
 
@@ -22,7 +22,7 @@ pod "DSAlertView"
 
 ## Author
 
-dm.smolyakov@gmail.com
+Dmitry Smolyakov, dm.smolyakov@gmail.com
 
 ## License
 
