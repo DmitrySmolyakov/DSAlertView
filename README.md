@@ -22,7 +22,7 @@ pod "DSAlertView"
 
 ## Author
 
-vinclai@yandex.ru, dm.smolyakov@gmail.com
+dm.smolyakov@gmail.com
 
 ## License
 
