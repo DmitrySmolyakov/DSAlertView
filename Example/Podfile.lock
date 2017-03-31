@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DSAlertView: 8120d33d3027a0025c2955db7c5364652bfe48ab
+  DSAlertView: ad5c8630dd142cecf4b9cb02f03019b10dd82f5c
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2

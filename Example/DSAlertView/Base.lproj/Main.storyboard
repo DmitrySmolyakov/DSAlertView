@@ -23,7 +23,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGD-Nh-s90">
                                 <rect key="frame" x="164" y="318" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="SHOW"/>
                                 <connections>
                                     <action selector="showController:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7mp-JI-XS2"/>
                                 </connections>

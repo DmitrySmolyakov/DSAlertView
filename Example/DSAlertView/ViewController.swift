@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ShowedViewControllerExample") {
             
             let alertVC = DSAlertController(showedViewController: vc, widthMultiplier: 0.75, heightMultiplier: 0.65)
+            alertVC.cornerRadius = 50
             alertVC.show(presenter: self)
             
 //            DSAlertController.showViewController(presenter: self, showedViewController: vc)
