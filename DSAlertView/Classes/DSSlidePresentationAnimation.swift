@@ -10,11 +10,14 @@ import UIKit
 
 class DSSlidePresentationAnimation: DSPresentationAnimation {
 
-    let direction: DSAlertController.Animation.Direction
+    let direction: Animation.Direction
     
-    init(direction: DSAlertController.Animation.Direction) {
+    init(direction: Animation.Direction, rotation: Bool) {
         self.direction = direction
+        self.rotation = rotation
     }
+    
+    let rotation: Bool
     
     override public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
@@ -28,7 +31,10 @@ class DSSlidePresentationAnimation: DSPresentationAnimation {
         containerView.addSubview(toView)
         let startingBackgroundAlpha = toViewController.backgroundView.alpha
         toViewController.backgroundView.alpha = 0
-        toViewController.contentView.transform = getTransformForDirection(direction: direction, toView: toView)
+        
+        let transform = getTransformPropertiesForDirection(direction: direction, toView: toView)
+        let rotationAngle = self.rotationAngle != nil ? self.rotationAngle! : transform.rotationAngle
+        toViewController.contentView.transform = rotation ? CGAffineTransform(rotationAngle: rotationAngle).concatenating(transform.translation) : transform.translation
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext) * 0.5,
                        delay: 0,
@@ -49,16 +55,24 @@ class DSSlidePresentationAnimation: DSPresentationAnimation {
         }
     }
     
-    private func getTransformForDirection(direction: DSAlertController.Animation.Direction, toView: UIView) -> CGAffineTransform {
+    private func getTransformPropertiesForDirection(direction: Animation.Direction, toView: UIView) -> (translation: CGAffineTransform, rotationAngle: CGFloat) {
         switch direction {
         case .top:
-            return CGAffineTransform(translationX: 0, y: -toView.frame.size.height)
+            return (CGAffineTransform(translationX: 0, y: -toView.frame.size.height), CGFloat.pi)
         case .right:
-            return CGAffineTransform(translationX: toView.frame.size.width, y: 0)
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: 0), CGFloat.pi / 2)
         case .left:
-            return CGAffineTransform(translationX: -toView.frame.size.width, y: 0)
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: 0), CGFloat.pi / 2)
         case .bottom:
-            return CGAffineTransform(translationX: 0, y: toView.frame.size.height)
+            return (CGAffineTransform(translationX: 0, y: toView.frame.size.height), CGFloat.pi / 2)
+        case .topRight:
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: -toView.frame.size.height), -CGFloat.pi / 2)
+        case .topLeft:
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: -toView.frame.size.height), CGFloat.pi / 2)
+        case .bottomRight:
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: toView.frame.size.height), CGFloat.pi / 2)
+        case .bottomLeft:
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: toView.frame.size.height), CGFloat.pi / 2)
         }
     }
 }

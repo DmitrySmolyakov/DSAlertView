@@ -11,25 +11,14 @@ import SnapKit
 
 public class DSAlertController: UIViewController, DSTransitionAnimation {
     
-    public enum Animation {
-        case slide(direction: Direction)
-        case fade
-        
-        public enum Direction: Int {
-            case top
-            case bottom
-            case right
-            case left
-        }
-    }
-    
     public var presentAnimationDuration: Double = 0.5
+    public var presentAnimationRotationAngle: CGFloat?
     
-    public var presentAnimation: Animation = .slide(direction: .top) {
+    public var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
         didSet {
             switch presentAnimation {
-            case .slide(let direction):
-                self.presentationAnimation = DSSlidePresentationAnimation(direction: direction)
+            case .slide(let direction, let rotation):
+                self.presentationAnimation = DSSlidePresentationAnimation(direction: direction, rotation: rotation)
                 self.presentationAnimation.delegate = self
             case .fade:
                 break
@@ -155,6 +144,10 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
 extension DSAlertController: DSPresentationAnimationDelegate {
     func durationForPresentationAnimation() -> Double {
         return presentAnimationDuration
+    }
+    
+    func rotationAngle() -> CGFloat? {
+        return presentAnimationRotationAngle
     }
 }
 
