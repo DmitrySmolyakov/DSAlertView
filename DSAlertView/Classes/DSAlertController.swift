@@ -11,6 +11,31 @@ import SnapKit
 
 public class DSAlertController: UIViewController, DSTransitionAnimation {
     
+    public enum Animation {
+        case slide(direction: Direction)
+        case fade
+        
+        public enum Direction: Int {
+            case top
+            case bottom
+            case right
+            case left
+        }
+    }
+    
+    public var presentAnimationDuration: Double = 0.5
+    
+    public var presentAnimation: Animation = .slide(direction: .top) {
+        didSet {
+            switch presentAnimation {
+            case .slide(let direction):
+                self.presentationAnimation = DSSlidePresentationAnimation(direction: direction)
+                self.presentationAnimation.delegate = self
+            case .fade:
+                break
+            }
+        }
+    }
     let showedViewController: UIViewController
     lazy var contentView: UIView = {
         let tempContentView = UIView()
@@ -22,19 +47,42 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
     lazy var backgroundView: UIView = {
         let tempBackgroundView = UIView()
         tempBackgroundView.backgroundColor = .black
+        tempBackgroundView.alpha = self.backgroundViewAlpha
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.onBackViewTap))
         tempBackgroundView.addGestureRecognizer(tap)
         return tempBackgroundView
     }()
     
-    let presentionAnimation = DSPresentationAnimation()
-    let dismissAnimation = DSDismissAnimation()
+    lazy public var closeButton: UIButton = {
+        let tempCloseButton = UIButton()
+        tempCloseButton.tintColor = .black
+        tempCloseButton.setImage(self.getImageFromBundle(name: "closeButton").withRenderingMode(.alwaysTemplate), for: .normal)
+        tempCloseButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
+        return tempCloseButton
+    }()
+    
+    lazy public var presentationAnimation: DSPresentationAnimation = {
+        return DSPresentationAnimation()
+    }()
+    lazy public var dismissAnimation: DSDismissAnimation = {
+        return DSDismissAnimation()
+    }()
     
     public var widthMultiplier: Double = 1
     public var heightMultiplier: Double = 1
     public var cornerRadius: CGFloat = 25 {
         didSet {
             contentView.layer.cornerRadius = cornerRadius
+        }
+    }
+    public var backgroundColor: UIColor = .black {
+        didSet {
+            backgroundView.backgroundColor = backgroundColor
+        }
+    }
+    public var backgroundViewAlpha: CGFloat = 0.6 {
+        didSet {
+            backgroundView.alpha = backgroundViewAlpha
         }
     }
     
@@ -75,9 +123,6 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         }
         self.showedViewController.didMove(toParentViewController: self)
         
-        let closeButton = UIButton()
-        closeButton.setImage(getImageFromBundle(name: "closeButton"), for: .normal)
-        closeButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
         self.contentView.addSubview(closeButton)
         closeButton.snp.makeConstraints { (make) in
             make.width.equalTo(30)
@@ -93,17 +138,23 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         presenter.present(self, animated: true, completion: nil)
     }
     
-    func onBackViewTap() {
+    dynamic private func onBackViewTap() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func closeButtonTapped() {
+    dynamic private func closeButtonTapped() {
         self.dismiss(animated: true, completion: nil)
     }
     
     private func getImageFromBundle(name: String) -> UIImage {
         let podBundle = Bundle(for: DSAlertController.self)
         return UIImage(named: name, in: podBundle, compatibleWith: nil)!
+    }
+}
+
+extension DSAlertController: DSPresentationAnimationDelegate {
+    func durationForPresentationAnimation() -> Double {
+        return presentAnimationDuration
     }
 }
 
@@ -118,7 +169,7 @@ extension DSAlertController {
 extension DSAlertController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return presentionAnimation
+        return presentationAnimation
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
