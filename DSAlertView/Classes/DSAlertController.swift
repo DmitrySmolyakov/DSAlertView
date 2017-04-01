@@ -9,23 +9,23 @@
 import UIKit
 import SnapKit
 
-public class DSAlertController: UIViewController, DSTransitionAnimation {
+open class DSAlertController: UIViewController, DSTransitionAnimation {
     
-    public var presentAnimationDuration: Double = 0.5
-    public var presentAnimationRotationAngle: CGFloat?
-    public var finalRotationAngle: CGFloat?
+    open var presentAnimationDuration: Double = 0.5
+    open var presentAnimationRotationAngle: CGFloat?
+    open var finalRotationAngle: CGFloat?
     
-    public var dismissAnimationDuration: Double = 0.25
-    public var dismissAnimationRotationAngle: CGFloat?
+    open var dismissAnimationDuration: Double = 0.25
+    open var dismissAnimationRotationAngle: CGFloat?
     
-    public var hideByTapIsOn: Bool = true
-    public var backgroundViewIsHidden = false {
+    open var hideByTapIsOn: Bool = true
+    open var backgroundViewIsHidden = false {
         didSet {
             backgroundView.alpha = backgroundViewIsHidden ? 0 : backgroundViewAlpha
         }
     }
     
-    public var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
+    open var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
         didSet {
             switch presentAnimation {
             case .slide(let direction, let rotation):
@@ -36,7 +36,7 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
             }
         }
     }
-    public var dismissAnimation: Animation = .slide(direction: .bottom, rotation: false) {
+    open var dismissAnimation: Animation = .slide(direction: .bottom, rotation: false) {
         didSet {
             switch dismissAnimation {
             case .slide(let direction, let rotation):
@@ -53,21 +53,24 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         let tempContentView = UIView()
         tempContentView.clipsToBounds = true
         tempContentView.layer.cornerRadius = self.cornerRadius
+        tempContentView.backgroundColor = self.contentBackgroundColor
+        tempContentView.alpha = self.contentBackgroundAlpha
         return tempContentView
     }()
     
     lazy var backgroundView: UIView = {
         let tempBackgroundView = UIView()
-        tempBackgroundView.backgroundColor = .black
+        tempBackgroundView.backgroundColor = self.backgroundColor
         tempBackgroundView.alpha = self.backgroundViewAlpha
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.onBackViewTap))
         tempBackgroundView.addGestureRecognizer(tap)
         return tempBackgroundView
     }()
     
-    lazy public var closeButton: UIButton = {
+    lazy open var closeButton: UIButton = {
         let tempCloseButton = UIButton()
-        tempCloseButton.tintColor = .black
+        tempCloseButton.tintColor = self.closeButtonTintColor
+        tempCloseButton.isHidden = self.closeButtonIsHidden
         tempCloseButton.setImage(self.getImageFromBundle(name: "closeButton").withRenderingMode(.alwaysTemplate), for: .normal)
         tempCloseButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
         return tempCloseButton
@@ -80,34 +83,73 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         return DSSlideDismissAnimation(direction: .bottom, rotation: false)
     }()
     
-    public var widthMultiplier: Double = 1
-    public var heightMultiplier: Double = 1
-    public var cornerRadius: CGFloat = 25 {
+    open var widthMultiplier: Double = 1 {
+        didSet {
+            remakeConstraintsForContentView()
+        }
+    }
+    open var heightMultiplier: Double = 1 {
+        didSet {
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerMultiplierX: Double = 1 {
+        didSet {
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerMultiplierY: Double = 1 {
+        didSet {
+            remakeConstraintsForContentView()
+        }
+    }
+    open var cornerRadius: CGFloat = 25 {
         didSet {
             contentView.layer.cornerRadius = cornerRadius
         }
     }
-    public var borderWidth: CGFloat = 0 {
+    open var borderWidth: CGFloat = 0 {
         didSet {
             contentView.layer.borderWidth = borderWidth
         }
     }
-    public var borderColor: UIColor = .black {
+    open var borderColor: UIColor = .black {
         didSet {
             contentView.layer.borderColor = borderColor.cgColor
         }
     }
-    public var backgroundColor: UIColor = .black {
+    open var backgroundColor: UIColor = .black {
         didSet {
             backgroundView.backgroundColor = backgroundColor
         }
     }
-    public var backgroundViewAlpha: CGFloat = 0.6 {
+    open var backgroundViewAlpha: CGFloat = 0.6 {
         didSet {
             backgroundView.alpha = backgroundViewAlpha
         }
     }
+    open var contentBackgroundColor: UIColor = .clear {
+        didSet {
+            contentView.backgroundColor = contentBackgroundColor
+        }
+    }
+    open var contentBackgroundAlpha: CGFloat = 1 {
+        didSet {
+            contentView.alpha = contentBackgroundAlpha
+        }
+    }
+    open var closeButtonIsHidden: Bool = false {
+        didSet {
+            closeButton.isHidden = closeButtonIsHidden
+        }
+    }
+    open var closeButtonTintColor: UIColor = .black {
+        didSet {
+            closeButton.tintColor = closeButtonTintColor
+        }
+    }
     
+    // MARK: Initialization
     public init(showedViewController: UIViewController, widthMultiplier: Double = 1, heightMultiplier: Double = 1) {
         self.showedViewController = showedViewController
         self.widthMultiplier = widthMultiplier
@@ -119,7 +161,8 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    //MARK: LifeCycle
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(backgroundView)
@@ -131,7 +174,8 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         
         self.view.addSubview(self.contentView)
         self.contentView.snp.makeConstraints { (make) in
-            make.center.equalTo(self.view.snp.center)
+            make.centerX.equalTo(self.view.snp.centerX).multipliedBy(centerMultiplierX)
+            make.centerY.equalTo(self.view.snp.centerY).multipliedBy(centerMultiplierY)
             make.width.equalTo(self.view).multipliedBy(widthMultiplier)
             make.height.equalTo(self.view).multipliedBy(heightMultiplier)
         }
@@ -154,12 +198,7 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         }
     }
     
-    public func show(presenter: UIViewController) {
-        self.transitioningDelegate = self
-        self.modalPresentationStyle = .overFullScreen
-        presenter.present(self, animated: true, completion: nil)
-    }
-    
+    // MARK: Actions
     dynamic private func onBackViewTap() {
         if hideByTapIsOn {
             self.dismiss(animated: true, completion: nil)
@@ -170,12 +209,23 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // MARK: Helpers
     private func getImageFromBundle(name: String) -> UIImage {
         let podBundle = Bundle(for: DSAlertController.self)
         return UIImage(named: name, in: podBundle, compatibleWith: nil)!
     }
+
+    private func remakeConstraintsForContentView() {
+        self.contentView.snp.remakeConstraints { (make) in
+            make.centerX.equalTo(self.view.snp.centerX).multipliedBy(centerMultiplierX)
+            make.centerY.equalTo(self.view.snp.centerY).multipliedBy(centerMultiplierY)
+            make.width.equalTo(self.view).multipliedBy(widthMultiplier)
+            make.height.equalTo(self.view).multipliedBy(heightMultiplier)
+        }
+    }
 }
 
+// MARK: DSPresentationAnimationDelegate
 extension DSAlertController: DSPresentationAnimationDelegate {
     func durationForPresentationAnimation() -> Double {
         return presentAnimationDuration
@@ -190,6 +240,7 @@ extension DSAlertController: DSPresentationAnimationDelegate {
     }
 }
 
+// MARK: DSDismissAnimationDelegate
 extension DSAlertController: DSDismissAnimationDelegate {
     func durationForDismissAnimation() -> Double {
         return dismissAnimationDuration
@@ -200,21 +251,27 @@ extension DSAlertController: DSDismissAnimationDelegate {
     }
 }
 
+// MARK: Presenting methods
 extension DSAlertController {
-    
-    public static func showViewController(presenter: UIViewController, showedViewController: UIViewController) {
+    open static func showViewController(presenter: UIViewController, showedViewController: UIViewController) {
         let viewController = DSAlertController(showedViewController: showedViewController)
         viewController.show(presenter: presenter)
     }
+    
+    open func show(presenter: UIViewController) {
+        self.transitioningDelegate = self
+        self.modalPresentationStyle = .overFullScreen
+        presenter.present(self, animated: true, completion: nil)
+    }
 }
 
+// MARK: UIViewControllerTransitioningDelegate
 extension DSAlertController: UIViewControllerTransitioningDelegate {
-    
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return presentationAnimation
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dismissingAnimation
     }
 }
