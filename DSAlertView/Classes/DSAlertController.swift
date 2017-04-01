@@ -18,6 +18,13 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
     public var dismissAnimationDuration: Double = 0.25
     public var dismissAnimationRotationAngle: CGFloat?
     
+    public var hideByTapIsOn: Bool = true
+    public var backgroundViewIsHidden = false {
+        didSet {
+            backgroundView.alpha = backgroundViewIsHidden ? 0 : backgroundViewAlpha
+        }
+    }
+    
     public var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
         didSet {
             switch presentAnimation {
@@ -70,7 +77,7 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         return DSSlidePresentationAnimation(direction: .top, rotation: false)
     }()
     lazy var dismissingAnimation: DSDismissAnimation = {
-        return DSDismissAnimation()
+        return DSSlideDismissAnimation(direction: .bottom, rotation: false)
     }()
     
     public var widthMultiplier: Double = 1
@@ -154,7 +161,9 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
     }
     
     dynamic private func onBackViewTap() {
-        self.dismiss(animated: true, completion: nil)
+        if hideByTapIsOn {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     dynamic private func closeButtonTapped() {

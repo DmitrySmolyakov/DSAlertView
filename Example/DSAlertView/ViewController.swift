@@ -29,13 +29,14 @@ class ViewController: UIViewController {
             alertVC.cornerRadius = 50
             alertVC.borderWidth = 5
             alertVC.borderColor = .white
-            alertVC.backgroundColor = .red
+            alertVC.backgroundViewIsHidden = true
+//            alertVC.backgroundColor = .red
             alertVC.backgroundViewAlpha = 0.4
-            alertVC.presentAnimation = .slide(direction: .topRight, rotation: true)
+//            alertVC.presentAnimation = .slide(direction: .topRight, rotation: true)
 //            alertVC.presentAnimationDuration = 2
 //            alertVC.finalRotationAngle = CGFloat.pi / 15
 //            alertVC.presentAnimationRotationAngle = 0
-            alertVC.dismissAnimation = .slide(direction: .topRight, rotation: true)
+//            alertVC.dismissAnimation = .slide(direction: .topRight, rotation: true)
 //            alertVC.dismissAnimationDuration = 2
 //            alertVC.dismissAnimationRotationAngle = 0
             alertVC.closeButton.tintColor = .white
