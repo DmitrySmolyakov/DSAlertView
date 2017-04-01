@@ -11,13 +11,12 @@ import UIKit
 class DSSlidePresentationAnimation: DSPresentationAnimation {
 
     let direction: Animation.Direction
+    let rotation: Bool
     
     init(direction: Animation.Direction, rotation: Bool) {
         self.direction = direction
         self.rotation = rotation
     }
-    
-    let rotation: Bool
     
     override public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
@@ -49,7 +48,7 @@ class DSSlidePresentationAnimation: DSPresentationAnimation {
                        initialSpringVelocity: 1,
                        options: .curveEaseOut,
                        animations: {
-                        toViewController.contentView.transform = CGAffineTransform.identity
+                        toViewController.contentView.transform = self.contentFinalRotationAngle != nil ? CGAffineTransform(rotationAngle: self.contentFinalRotationAngle!) : CGAffineTransform.identity
         }) { _ in
             transitionContext.completeTransition(true)
         }
@@ -60,11 +59,11 @@ class DSSlidePresentationAnimation: DSPresentationAnimation {
         case .top:
             return (CGAffineTransform(translationX: 0, y: -toView.frame.size.height), CGFloat.pi)
         case .right:
-            return (CGAffineTransform(translationX: toView.frame.size.width, y: 0), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: 0), CGFloat.pi)
         case .left:
-            return (CGAffineTransform(translationX: -toView.frame.size.width, y: 0), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: 0), -CGFloat.pi)
         case .bottom:
-            return (CGAffineTransform(translationX: 0, y: toView.frame.size.height), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: 0, y: toView.frame.size.height), -CGFloat.pi)
         case .topRight:
             return (CGAffineTransform(translationX: toView.frame.size.width, y: -toView.frame.size.height), -CGFloat.pi / 2)
         case .topLeft:
@@ -72,7 +71,7 @@ class DSSlidePresentationAnimation: DSPresentationAnimation {
         case .bottomRight:
             return (CGAffineTransform(translationX: toView.frame.size.width, y: toView.frame.size.height), CGFloat.pi / 2)
         case .bottomLeft:
-            return (CGAffineTransform(translationX: -toView.frame.size.width, y: toView.frame.size.height), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: toView.frame.size.height), -CGFloat.pi / 2)
         }
     }
 }

@@ -10,7 +10,8 @@ import UIKit
 
 protocol DSPresentationAnimationDelegate: class {
     func durationForPresentationAnimation() -> Double
-    func rotationAngle() -> CGFloat?
+    func rotationAngleForPresentAnimation() -> CGFloat?
+    func contentFinalRotationAngleForPresentAnimation() -> CGFloat?
 }
 
 public class DSPresentationAnimation: NSObject, UIViewControllerAnimatedTransitioning {
@@ -18,7 +19,11 @@ public class DSPresentationAnimation: NSObject, UIViewControllerAnimatedTransiti
     weak var delegate: DSPresentationAnimationDelegate?
     
     var rotationAngle: CGFloat? {
-        return self.delegate?.rotationAngle() ?? nil
+        return self.delegate?.rotationAngleForPresentAnimation()
+    }
+    
+    var contentFinalRotationAngle: CGFloat? {
+        return self.delegate?.contentFinalRotationAngleForPresentAnimation()
     }
     
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -26,6 +31,6 @@ public class DSPresentationAnimation: NSObject, UIViewControllerAnimatedTransiti
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
-    }   
+        //abstract class do nothing
+    }
 }

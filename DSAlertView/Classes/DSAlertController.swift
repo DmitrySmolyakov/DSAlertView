@@ -13,6 +13,10 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
     
     public var presentAnimationDuration: Double = 0.5
     public var presentAnimationRotationAngle: CGFloat?
+    public var finalRotationAngle: CGFloat?
+    
+    public var dismissAnimationDuration: Double = 0.25
+    public var dismissAnimationRotationAngle: CGFloat?
     
     public var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
         didSet {
@@ -25,6 +29,18 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
             }
         }
     }
+    public var dismissAnimation: Animation = .slide(direction: .bottom, rotation: false) {
+        didSet {
+            switch dismissAnimation {
+            case .slide(let direction, let rotation):
+                self.dismissingAnimation = DSSlideDismissAnimation(direction: direction, rotation: rotation)
+                self.dismissingAnimation.delegate = self
+            case .fade:
+                break
+            }
+        }
+    }
+    
     let showedViewController: UIViewController
     lazy var contentView: UIView = {
         let tempContentView = UIView()
@@ -50,10 +66,10 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
         return tempCloseButton
     }()
     
-    lazy public var presentationAnimation: DSPresentationAnimation = {
-        return DSPresentationAnimation()
+    lazy var presentationAnimation: DSPresentationAnimation = {
+        return DSSlidePresentationAnimation(direction: .top, rotation: false)
     }()
-    lazy public var dismissAnimation: DSDismissAnimation = {
+    lazy var dismissingAnimation: DSDismissAnimation = {
         return DSDismissAnimation()
     }()
     
@@ -62,6 +78,16 @@ public class DSAlertController: UIViewController, DSTransitionAnimation {
     public var cornerRadius: CGFloat = 25 {
         didSet {
             contentView.layer.cornerRadius = cornerRadius
+        }
+    }
+    public var borderWidth: CGFloat = 0 {
+        didSet {
+            contentView.layer.borderWidth = borderWidth
+        }
+    }
+    public var borderColor: UIColor = .black {
+        didSet {
+            contentView.layer.borderColor = borderColor.cgColor
         }
     }
     public var backgroundColor: UIColor = .black {
@@ -146,8 +172,22 @@ extension DSAlertController: DSPresentationAnimationDelegate {
         return presentAnimationDuration
     }
     
-    func rotationAngle() -> CGFloat? {
+    func rotationAngleForPresentAnimation() -> CGFloat? {
         return presentAnimationRotationAngle
+    }
+    
+    func contentFinalRotationAngleForPresentAnimation() -> CGFloat? {
+        return finalRotationAngle
+    }
+}
+
+extension DSAlertController: DSDismissAnimationDelegate {
+    func durationForDismissAnimation() -> Double {
+        return dismissAnimationDuration
+    }
+    
+    func rotationAngleForDismissAnimation() -> CGFloat? {
+        return dismissAnimationRotationAngle
     }
 }
 
@@ -166,6 +206,6 @@ extension DSAlertController: UIViewControllerTransitioningDelegate {
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return dismissAnimation
+        return dismissingAnimation
     }
 }

@@ -27,11 +27,17 @@ class ViewController: UIViewController {
             
             let alertVC = DSAlertController(showedViewController: vc, widthMultiplier: 0.75, heightMultiplier: 0.65)
             alertVC.cornerRadius = 50
+            alertVC.borderWidth = 5
+            alertVC.borderColor = .white
             alertVC.backgroundColor = .red
             alertVC.backgroundViewAlpha = 0.4
-            alertVC.presentAnimation = .slide(direction: .top, rotation: true)
-            alertVC.presentAnimationDuration = 0.5
+            alertVC.presentAnimation = .slide(direction: .topRight, rotation: true)
+//            alertVC.presentAnimationDuration = 2
+//            alertVC.finalRotationAngle = CGFloat.pi / 15
 //            alertVC.presentAnimationRotationAngle = 0
+            alertVC.dismissAnimation = .slide(direction: .topRight, rotation: true)
+//            alertVC.dismissAnimationDuration = 2
+//            alertVC.dismissAnimationRotationAngle = 0
             alertVC.closeButton.tintColor = .white
             alertVC.closeButton.isHidden = true
             alertVC.show(presenter: self)

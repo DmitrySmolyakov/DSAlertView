@@ -8,38 +8,24 @@
 
 import UIKit
 
+protocol DSDismissAnimationDelegate: class {
+    func durationForDismissAnimation() -> Double
+    func rotationAngleForDismissAnimation() -> CGFloat?
+}
+
 public class DSDismissAnimation: NSObject, UIViewControllerAnimatedTransitioning {
 
+    weak var delegate: DSDismissAnimationDelegate?
+    
+    var rotationAngle: CGFloat? {
+        return self.delegate?.rotationAngleForDismissAnimation()
+    }
+    
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.25
+        return self.delegate?.durationForDismissAnimation() ?? 0.25
     }
 
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
-        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as? DSTransitionAnimation else {
-            return
-        }
-        guard let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from) else {
-            return
-        }
-        
-        let backgroundShowAnimationTimeMultiplier = 0.5
-        let delay = transitionDuration(using: transitionContext) - transitionDuration(using: transitionContext) * backgroundShowAnimationTimeMultiplier
-        
-        UIView.animate(withDuration: transitionDuration(using: transitionContext) * backgroundShowAnimationTimeMultiplier,
-                       delay: delay,
-                       options: .curveEaseOut,
-                       animations: {
-            fromViewController.backgroundView.alpha = 0
-        }, completion: nil)
-        
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseOut, animations: {
-            fromViewController.contentView.alpha = 0
-            fromViewController.contentView.transform = CGAffineTransform(translationX: 0, y: fromView.frame.maxY - fromViewController.backgroundView.frame.minY)
-        }) { _ in
-            transitionContext.completeTransition(true)
-        }
-        
+        //abstract class do nothing
     }
-
 }
