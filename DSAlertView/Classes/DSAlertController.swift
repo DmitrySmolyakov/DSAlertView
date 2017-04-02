@@ -25,25 +25,27 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         }
     }
     
-    open var presentAnimation: Animation = .slide(direction: .top, rotation: false) {
+    open var presentAnimation: Animation = .fade {
         didSet {
             switch presentAnimation {
             case .slide(let direction, let rotation):
                 self.presentationAnimation = DSSlidePresentationAnimation(direction: direction, rotation: rotation)
                 self.presentationAnimation.delegate = self
             case .fade:
-                break
+                self.presentationAnimation = DSFadePresentationAnimation()
+                self.presentationAnimation.delegate = self
             }
         }
     }
-    open var dismissAnimation: Animation = .slide(direction: .bottom, rotation: false) {
+    open var dismissAnimation: Animation = .fade {
         didSet {
             switch dismissAnimation {
             case .slide(let direction, let rotation):
                 self.dismissingAnimation = DSSlideDismissAnimation(direction: direction, rotation: rotation)
                 self.dismissingAnimation.delegate = self
             case .fade:
-                break
+                self.dismissingAnimation = DSFadeDismissAnimation()
+                self.presentationAnimation.delegate = self
             }
         }
     }
@@ -77,10 +79,10 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
     }()
     
     lazy var presentationAnimation: DSPresentationAnimation = {
-        return DSSlidePresentationAnimation(direction: .top, rotation: false)
+        return DSFadePresentationAnimation()
     }()
     lazy var dismissingAnimation: DSDismissAnimation = {
-        return DSSlideDismissAnimation(direction: .bottom, rotation: false)
+        return DSFadeDismissAnimation()
     }()
     
     open var widthMultiplier: Double = 1 {
@@ -154,6 +156,11 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         self.showedViewController = showedViewController
         self.widthMultiplier = widthMultiplier
         self.heightMultiplier = heightMultiplier
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public init(showedViewController: UIViewController) {
+        self.showedViewController = showedViewController
         super.init(nibName: nil, bundle: nil)
     }
     
