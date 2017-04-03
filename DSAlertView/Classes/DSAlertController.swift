@@ -270,6 +270,10 @@ extension DSAlertController {
         self.modalPresentationStyle = .overFullScreen
         presenter.present(self, animated: true, completion: nil)
     }
+    
+    open func dismiss() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: UIViewControllerTransitioningDelegate
