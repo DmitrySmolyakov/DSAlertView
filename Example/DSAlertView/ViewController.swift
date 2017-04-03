@@ -17,6 +17,10 @@ class ViewController: UIViewController {
     var widthMultiplier: Float = 1 {
         didSet {
             alertVC.widthMultiplier = Double(widthMultiplier)
+            resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.width = \(width)", with: "")
+            self.widthMultiplierLabel.alpha = 1
+            self.widthMultiplierSlider.alpha = 1
+            self.widthTextField.alpha = 0.2
             if resultCodeTextView.text.range(of: ".widthMultiplier") != nil {
                 resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".widthMultiplier = \(oldValue)", with: ".widthMultiplier = \(widthMultiplier)")
             } else {
@@ -27,10 +31,42 @@ class ViewController: UIViewController {
     var heightMultiplier: Float = 1 {
         didSet {
             alertVC.heightMultiplier = Double(heightMultiplier)
+            resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.height = \(height)", with: "")
+            self.heightMultiplierLabel.alpha = 1
+            self.heightMultiplierSlider.alpha = 1
+            self.heightTextField.alpha = 0.2
             if resultCodeTextView.text.range(of: ".heightMultiplier") != nil {
                 resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".heightMultiplier = \(oldValue)", with: ".heightMultiplier = \(heightMultiplier)")
             } else {
                 resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.show", with: "\nalertVC.heightMultiplier = \(heightMultiplier)\nalertVC.show")
+            }
+        }
+    }
+    var width: CGFloat = 0 {
+        didSet {
+            alertVC.width = width
+            resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.widthMultiplier = \(widthMultiplier)", with: "")
+            self.widthMultiplierLabel.alpha = 0.2
+            self.widthMultiplierSlider.alpha = 0.2
+            self.widthTextField.alpha = 1
+            if resultCodeTextView.text.range(of: ".width") != nil {
+                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".width = \(oldValue)", with: ".width = \(width)")
+            } else {
+                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.show", with: "\nalertVC.width = \(width)\nalertVC.show")
+            }
+        }
+    }
+    var height: CGFloat = 0 {
+        didSet {
+            alertVC.height = height
+            resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.heightMultiplier = \(heightMultiplier)", with: "")
+            self.heightMultiplierLabel.alpha = 0.2
+            self.heightMultiplierSlider.alpha = 0.2
+            self.heightTextField.alpha = 1
+            if resultCodeTextView.text.range(of: ".height") != nil {
+                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".height = \(oldValue)", with: ".height = \(height)")
+            } else {
+                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.show", with: "\nalertVC.height = \(height)\nalertVC.show")
             }
         }
     }
@@ -51,7 +87,6 @@ class ViewController: UIViewController {
         heightMultiplierSliderChanged(heightMultiplierSlider)
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
 
     @IBAction func showController(_ sender: UIButton) {
         
@@ -62,6 +97,10 @@ class ViewController: UIViewController {
             alertVC.cornerRadius = 50
             alertVC.borderWidth = 5
             alertVC.borderColor = .white
+//        alertVC.centerOffsetX = 50
+//        alertVC.centerOffsetY = 30
+//            alertVC.width = 250
+//            alertVC.height = 115
 //            alertVC.backgroundViewIsHidden = true
 //            alertVC.backgroundColor = .red
             alertVC.backgroundViewAlpha = 0.4
@@ -91,6 +130,9 @@ class ViewController: UIViewController {
         heightMultiplier = sender.value.roundTo(places: 2)
         heightMultiplierLabel.text = String(heightMultiplier)
     }
+    
+    @IBOutlet weak var widthTextField: UITextField!
+    @IBOutlet weak var heightTextField: UITextField!
 }
 
 extension ViewController: UITextFieldDelegate {
@@ -99,12 +141,27 @@ extension ViewController: UITextFieldDelegate {
         let tempString: NSString = textField.text! as NSString
         let resultString = tempString.replacingCharacters(in: range, with: string) as String
         
+        if resultString.isEmpty {
+            return true
+        }
         
-        print(resultString)
+        guard let value = Double(resultString) else {
+            return false
+        }
+        
+        if textField === widthTextField {
+            width = CGFloat(value)
+        } else if textField === heightTextField {
+            height = CGFloat(value)
+        }
+        
         return true
     }
 
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
 }
 

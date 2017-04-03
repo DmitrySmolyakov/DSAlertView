@@ -85,23 +85,54 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         return DSFadeDismissAnimation()
     }()
     
+    private var contentSizeConstraints = ContentSizeConstraints(widthMultiplier: true,
+                                                                heightMultiplier: true,
+                                                                centerMultiplier: true)
     open var widthMultiplier: Double = 1 {
         didSet {
+            contentSizeConstraints.widthMultiplier = true
             remakeConstraintsForContentView()
         }
     }
     open var heightMultiplier: Double = 1 {
         didSet {
+            contentSizeConstraints.heightMultiplier = true
             remakeConstraintsForContentView()
         }
     }
     open var centerMultiplierX: Double = 1 {
         didSet {
+            contentSizeConstraints.centerMultiplier = true
             remakeConstraintsForContentView()
         }
     }
     open var centerMultiplierY: Double = 1 {
         didSet {
+            contentSizeConstraints.centerMultiplier = true
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerOffsetX: CGFloat = 0 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerOffsetY: CGFloat = 0 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var width: CGFloat = 250 {
+        didSet {
+            contentSizeConstraints.widthMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var height: CGFloat = 300 {
+        didSet {
+            contentSizeConstraints.heightMultiplier = false
             remakeConstraintsForContentView()
         }
     }
@@ -151,6 +182,12 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         }
     }
     
+    private struct ContentSizeConstraints {
+        var widthMultiplier: Bool
+        var heightMultiplier: Bool
+        var centerMultiplier: Bool
+    }
+    
     // MARK: Initialization
     public init(showedViewController: UIViewController, widthMultiplier: Double = 1, heightMultiplier: Double = 1) {
         self.showedViewController = showedViewController
@@ -180,12 +217,7 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         }
         
         self.view.addSubview(self.contentView)
-        self.contentView.snp.makeConstraints { (make) in
-            make.centerX.equalTo(self.view.snp.centerX).multipliedBy(centerMultiplierX)
-            make.centerY.equalTo(self.view.snp.centerY).multipliedBy(centerMultiplierY)
-            make.width.equalTo(self.view).multipliedBy(widthMultiplier)
-            make.height.equalTo(self.view).multipliedBy(heightMultiplier)
-        }
+        self.remakeConstraintsForContentView()
         
         self.addChildViewController(showedViewController)
         self.contentView.addSubview(showedViewController.view)
@@ -224,12 +256,35 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
 
     private func remakeConstraintsForContentView() {
         self.contentView.snp.remakeConstraints { (make) in
-            make.centerX.equalTo(self.view.snp.centerX).multipliedBy(centerMultiplierX)
-            make.centerY.equalTo(self.view.snp.centerY).multipliedBy(centerMultiplierY)
-            make.width.equalTo(self.view).multipliedBy(widthMultiplier)
-            make.height.equalTo(self.view).multipliedBy(heightMultiplier)
+            if contentSizeConstraints.widthMultiplier {
+                make.width.equalTo(self.view).multipliedBy(widthMultiplier)
+            } else {
+                make.width.equalTo(width)
+            }
+            if contentSizeConstraints.heightMultiplier {
+                make.height.equalTo(self.view).multipliedBy(heightMultiplier)
+            } else {
+                make.height.equalTo(height)
+            }
+            if contentSizeConstraints.centerMultiplier {
+                make.centerX.equalTo(self.view.snp.centerX).multipliedBy(centerMultiplierX)
+            } else {
+                make.centerX.equalTo(self.view.snp.centerX).offset(centerOffsetX)
+            }
+            if contentSizeConstraints.centerMultiplier {
+                make.centerY.equalTo(self.view.snp.centerY).multipliedBy(centerMultiplierY)
+            } else {
+                make.centerY.equalTo(self.view.snp.centerY).offset(centerOffsetY)
+            }
         }
     }
+}
+
+extension Array {
+    mutating func removeObject<T>(obj: T) where T : Equatable {
+        self = self.filter({$0 as? T != obj})
+    }
+    
 }
 
 // MARK: DSPresentationAnimationDelegate
