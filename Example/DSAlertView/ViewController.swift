@@ -62,7 +62,7 @@ class ViewController: UIViewController {
             alertVC.cornerRadius = 50
             alertVC.borderWidth = 5
             alertVC.borderColor = .white
-            alertVC.backgroundViewIsHidden = true
+//            alertVC.backgroundViewIsHidden = true
 //            alertVC.backgroundColor = .red
             alertVC.backgroundViewAlpha = 0.4
 //            alertVC.presentAnimation = .slide(direction: .topRight, rotation: true)

@@ -63,4 +63,16 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
-Example/Pods
+Manifest.lock
+Example/Pods/FBSnapshotTestCase
+Example/Pods/Nimble
+Example/Pods/Nimble-Snapshots
+Example/Pods/Quick
+Example/Pods/SnapKit
+Example/Pods/Target Support Files/FBSnapshotTestCase
+Example/Pods/Target Support Files/Nimble
+Example/Pods/Target Support Files/Nimble-Snapshots
+Example/Pods/Target Support Files/Quick
+Example/Pods/Target Support Files/SnapKit
+Example/Pods/Target Support Files/Pods-DSAlertView_Example
+Example/Pods/Target Support Files/Pods-DSAlertView_Tests

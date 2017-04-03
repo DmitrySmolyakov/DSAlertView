@@ -25,10 +25,10 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   DSAlertView:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  DSAlertView: a00b4ebf9e39fb5ec49b4fd3a4b01dd492d16a8b
+  DSAlertView: dd5fcaf18dda51886d589ad4349d344b4138db9c
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2

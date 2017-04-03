@@ -1,0 +1,6 @@
+framework module DSAlertView {
+  umbrella header "DSAlertView-umbrella.h"
+
+  export *
+  module * { export * }
+}
