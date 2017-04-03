@@ -9,62 +9,30 @@
 import UIKit
 import DSAlertView
 
-class ViewController: UIViewController {
-
-    var codeString = String()
-    @IBOutlet weak var resultCodeTextView: UITextView!
+class ViewController: UITableViewController {
     
-    var widthMultiplier: Float = 1 {
-        didSet {
-            alertVC.widthMultiplier = Double(widthMultiplier)
-            if resultCodeTextView.text.range(of: ".widthMultiplier") != nil {
-                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".widthMultiplier = \(oldValue)", with: ".widthMultiplier = \(widthMultiplier)")
-            } else {
-                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.show", with: "\nalertVC.widthMultiplier = \(widthMultiplier)\nalertVC.show")
-            }
-        }
-    }
-    var heightMultiplier: Float = 1 {
-        didSet {
-            alertVC.heightMultiplier = Double(heightMultiplier)
-            if resultCodeTextView.text.range(of: ".heightMultiplier") != nil {
-                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: ".heightMultiplier = \(oldValue)", with: ".heightMultiplier = \(heightMultiplier)")
-            } else {
-                resultCodeTextView.text = resultCodeTextView.text.replacingOccurrences(of: "\nalertVC.show", with: "\nalertVC.heightMultiplier = \(heightMultiplier)\nalertVC.show")
-            }
-        }
-    }
+    public let sectionTitleArray = ["Default"]
+    public let sectionSubtitleArray = ["Simple default style"]
+    public let titleArray = [["Default style"]]
+    public let subtitleArray = [["Simple alert with default style"]]
     
-    lazy var alertVC: DSAlertController = {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "ShowedViewControllerExample") else {
-            return DSAlertController(showedViewController: UIViewController())
-        }
-        return DSAlertController(showedViewController: vc)
-    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultCodeTextView.text = "let alertVC = DSAlertController(showedViewController: UIViewController())\nalertVC.show(presenter: self)"
-        widthMultiplierSlider.value = 0.7
-        widthMultiplierSliderChanged(widthMultiplierSlider)
-        heightMultiplierSlider.value = 0.6
-        heightMultiplierSliderChanged(heightMultiplierSlider)
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = .lightText
     }
     
-
-    @IBAction func showController(_ sender: UIButton) {
-        
 //            alertVC.widthMultiplier = 0.9
 //            alertVC.heightMultiplier = 0.9
 //            alertVC.centerMultiplierX = 1.1
 //            alertVC.centerMultiplierY = 1.1
-            alertVC.cornerRadius = 50
-            alertVC.borderWidth = 5
-            alertVC.borderColor = .white
+//            alertVC.cornerRadius = 50
+//            alertVC.borderWidth = 5
+//            alertVC.borderColor = .white
 //            alertVC.backgroundViewIsHidden = true
 //            alertVC.backgroundColor = .red
-            alertVC.backgroundViewAlpha = 0.4
+//            alertVC.backgroundViewAlpha = 0.4
 //            alertVC.presentAnimation = .slide(direction: .topRight, rotation: true)
 //            alertVC.presentAnimationDuration = 2
 //            alertVC.finalRotationAngle = CGFloat.pi / 15
@@ -72,45 +40,76 @@ class ViewController: UIViewController {
 //            alertVC.dismissAnimation = .slide(direction: .topRight, rotation: true)
 //            alertVC.dismissAnimationDuration = 2
 //            alertVC.dismissAnimationRotationAngle = 0
-            alertVC.closeButtonTintColor = .white
-            alertVC.closeButtonIsHidden = true
-            alertVC.show(presenter: self)
+//            alertVC.closeButtonTintColor = .white
+//            alertVC.closeButtonIsHidden = true
+//            alertVC.show(presenter: self)
 //            DSAlertController.showViewController(presenter: self, showedViewController: vc)
+}
+
+// MARK: UITableViewDataSource
+extension ViewController {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionTitleArray.count
     }
     
-    @IBOutlet weak var widthMultiplierLabel: UILabel!
-    @IBOutlet weak var widthMultiplierSlider: UISlider!
-    @IBAction func widthMultiplierSliderChanged(_ sender: UISlider) {
-        widthMultiplier = sender.value.roundTo(places: 2)
-        widthMultiplierLabel.text = String(widthMultiplier)
-    }
-    
-    @IBOutlet weak var heightMultiplierLabel: UILabel!
-    @IBOutlet weak var heightMultiplierSlider: UISlider!
-    @IBAction func heightMultiplierSliderChanged(_ sender: UISlider) {
-        heightMultiplier = sender.value.roundTo(places: 2)
-        heightMultiplierLabel.text = String(heightMultiplier)
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return titleArray[section].count
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+// MARK: UITableViewDelegate
+extension ViewController {
     
-     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let tempString: NSString = textField.text! as NSString
-        let resultString = tempString.replacingCharacters(in: range, with: string) as String
-        
-        
-        print(resultString)
-        return true
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 68.0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 42.0
+    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitleArray[section] + " " + "(" + sectionSubtitleArray[section] + ")"
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
 
-    
-    
-}
-
-extension Float {
-    func roundTo(places: Int) -> Float {
-        let divisor = pow(10.0, Float(places))
-        return (self * divisor).rounded() / divisor
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell") ?? UITableViewCell.init(style: .subtitle, reuseIdentifier: "UITableViewCell")
+        
+        cell.textLabel?.textColor = UIColor.init(white: 0.0, alpha: 0.6)
+        cell.textLabel?.font = UIFont.init(name: "Courier-Regular", size: 14.0)
+        cell.textLabel?.lineBreakMode = .byCharWrapping
+        cell.textLabel?.text = "\(indexPath.section + 1).\(indexPath.row + 1) \(titleArray[indexPath.section][indexPath.row])"
+        cell.textLabel?.numberOfLines = 2
+        
+        cell.detailTextLabel?.textColor = UIColor.init(white: 0.0, alpha: 0.5)
+        cell.detailTextLabel?.font = UIFont.init(name: "Courier-Regular", size: 11.0)
+        cell.detailTextLabel?.text = "\(subtitleArray[indexPath.section][indexPath.row])"
+        cell.detailTextLabel?.numberOfLines = 2
+        
+        return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                let exampleViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowedViewControllerExample")
+                ExampleProvider.defaultStyle(showedViewController: exampleViewController!).show(presenter: self)
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        
+    }
+
 }

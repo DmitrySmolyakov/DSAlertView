@@ -85,12 +85,12 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         return DSFadeDismissAnimation()
     }()
     
-    open var widthMultiplier: Double = 1 {
+    open var widthMultiplier: Double = 0.7 {
         didSet {
             remakeConstraintsForContentView()
         }
     }
-    open var heightMultiplier: Double = 1 {
+    open var heightMultiplier: Double = 0.6 {
         didSet {
             remakeConstraintsForContentView()
         }
@@ -140,7 +140,7 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
             contentView.alpha = contentBackgroundAlpha
         }
     }
-    open var closeButtonIsHidden: Bool = false {
+    open var closeButtonIsHidden: Bool = true {
         didSet {
             closeButton.isHidden = closeButtonIsHidden
         }

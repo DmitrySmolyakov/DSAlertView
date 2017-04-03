@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1870CE771E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */; };
+		18754CCA1E92685200412C25 /* ExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18754CC91E92685200412C25 /* ExampleProvider.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowedViewControllerExample.swift; sourceTree = "<group>"; };
+		18754CC91E92685200412C25 /* ExampleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleProvider.swift; sourceTree = "<group>"; };
 		2663C16834F05B2D44265909 /* DSAlertView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DSAlertView.podspec; path = ../DSAlertView.podspec; sourceTree = "<group>"; };
 		2814EC8E053871BD321A5D5F /* Pods-DSAlertView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DSAlertView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DSAlertView_Tests/Pods-DSAlertView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4635505A6690F0CDE92C0111 /* Pods_DSAlertView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DSAlertView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +99,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				18754CC91E92685200412C25 /* ExampleProvider.swift */,
 				1870CE761E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -367,6 +370,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				1870CE771E8D2C7500FEA4F0 /* ShowedViewControllerExample.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				18754CCA1E92685200412C25 /* ExampleProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
