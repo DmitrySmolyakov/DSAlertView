@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,8 +68,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wront!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKw-Bc-L86">
-                                <rect key="frame" x="99" y="365" width="177" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wront!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKw-Bc-L86">
+                                <rect key="frame" x="24" y="365" width="327" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -99,11 +100,13 @@
                             <constraint firstItem="2bq-Sc-5CR" firstAttribute="centerX" secondItem="p7S-v3-A3h" secondAttribute="centerX" id="3BR-Qu-MRU"/>
                             <constraint firstItem="N4O-Yy-UW3" firstAttribute="top" secondItem="6su-kx-3QR" secondAttribute="bottom" constant="20" id="ASd-lc-Gd3"/>
                             <constraint firstItem="2bq-Sc-5CR" firstAttribute="width" secondItem="p7S-v3-A3h" secondAttribute="width" multiplier="0.5" id="WU7-fY-dPg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gKw-Bc-L86" secondAttribute="trailing" constant="8" id="XvT-zf-87J"/>
                             <constraint firstItem="WCb-c6-41I" firstAttribute="centerY" secondItem="p7S-v3-A3h" secondAttribute="centerY" id="anK-vo-q4g"/>
                             <constraint firstItem="gKw-Bc-L86" firstAttribute="top" secondItem="WCb-c6-41I" secondAttribute="bottom" constant="15" id="cBm-Vk-PGG"/>
                             <constraint firstItem="6su-kx-3QR" firstAttribute="centerX" secondItem="gKw-Bc-L86" secondAttribute="centerX" id="lgh-If-Le4"/>
                             <constraint firstItem="WCb-c6-41I" firstAttribute="top" secondItem="2bq-Sc-5CR" secondAttribute="bottom" constant="8" id="loI-Q3-yVB"/>
                             <constraint firstItem="gKw-Bc-L86" firstAttribute="centerX" secondItem="WCb-c6-41I" secondAttribute="centerX" id="nyz-QI-CiZ"/>
+                            <constraint firstItem="gKw-Bc-L86" firstAttribute="leading" secondItem="p7S-v3-A3h" secondAttribute="leadingMargin" constant="8" id="p59-73-abr"/>
                             <constraint firstItem="WCb-c6-41I" firstAttribute="centerX" secondItem="p7S-v3-A3h" secondAttribute="centerX" id="vMw-dv-9O5"/>
                         </constraints>
                     </view>

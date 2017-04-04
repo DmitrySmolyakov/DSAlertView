@@ -18,8 +18,15 @@ class ExampleProvider {
         return alertVC
     }
     
+    //Alert setup
+    //2.1 Content view size, relative values
+    static func contentSizeRelative(showedViewController: UIViewController) -> DSAlertController {
+        let alertVC = DSAlertController(showedViewController: showedViewController, widthMultiplier: 0.5, heightMultiplier: 0.45)
+        return alertVC
+    }
+    
     //Animation
-    //2.1 Slide animation for present and dismiss
+    //3.1 Slide animation for present and dismiss
     static func slideAnimation(showedViewController: UIViewController) -> DSAlertController {
         let alertVC = DSAlertController(showedViewController: showedViewController)
         alertVC.presentAnimation = .slide(direction: .top, rotation: false)
@@ -27,7 +34,7 @@ class ExampleProvider {
         return alertVC
     }
     
-    //2.2 Slide animation with rotation
+    //3.2 Slide animation with rotation
     static func slideAnimationWithDefaultRotation(showedViewController: UIViewController) -> DSAlertController {
         let alertVC = DSAlertController(showedViewController: showedViewController)
         alertVC.presentAnimation = .slide(direction: .topLeft, rotation: true)
@@ -35,7 +42,7 @@ class ExampleProvider {
         return alertVC
     }
     
-    //2.3 Slide animation with rotation angle
+    //3.3 Slide animation with rotation angle
     static func slideAnimationWithCustomRotation(showedViewController: UIViewController) -> DSAlertController {
         let alertVC = DSAlertController(showedViewController: showedViewController)
         alertVC.presentAnimation = .slide(direction: .left, rotation: true)
@@ -45,7 +52,7 @@ class ExampleProvider {
         return alertVC
     }
     
-    //2.4 Final rotation angle
+    //3.4 Final rotation angle
     static func finalRotationAngle(showedViewController: UIViewController) -> DSAlertController {
         let alertVC = DSAlertController(showedViewController: showedViewController)
         alertVC.presentAnimation = .slide(direction: .bottom, rotation: true)
@@ -53,7 +60,4 @@ class ExampleProvider {
         alertVC.dismissAnimation = .slide(direction: .bottom, rotation: true)
         return alertVC
     }
-    
-    
-    
 }

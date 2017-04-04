@@ -51,7 +51,7 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
     }
     
     let showedViewController: UIViewController
-    lazy var contentView: UIView = {
+    lazy open var contentView: UIView = {
         let tempContentView = UIView()
         tempContentView.clipsToBounds = true
         tempContentView.layer.cornerRadius = self.cornerRadius
@@ -60,7 +60,7 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         return tempContentView
     }()
     
-    lazy var backgroundView: UIView = {
+    lazy open var backgroundView: UIView = {
         let tempBackgroundView = UIView()
         tempBackgroundView.backgroundColor = self.backgroundColor
         tempBackgroundView.alpha = self.backgroundViewAlpha
@@ -85,6 +85,7 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         return DSFadeDismissAnimation()
     }()
     
+    // Content view size setup
     open var widthMultiplier: Double = 0.7 {
         didSet {
             remakeConstraintsForContentView()

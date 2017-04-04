@@ -11,18 +11,19 @@ import DSAlertView
 
 class ViewController: UITableViewController {
     
-    let sectionTitleArray = ["Default", "Animation"]
-    let sectionSubtitleArray = ["Simple default style", "Different styles"]
+    let sectionTitleArray = ["Default", "Alert setup", "Animation"]
+    let sectionSubtitleArray = ["Simple default style", "UI configuration", "Different styles"]
     let titleArray = [["Default style"],
+                      ["Content view size"],
                       ["Slide animation for present and dismiss", "Slide animation with rotation", "Slide animation with rotation angle", "Final rotation angle"]]
     let subtitleArray = [["Simple alert with default style"],
+                         ["Relative values"],
                          ["Simple slide animation", "Default rotation angle", "Slide animation with custom rotation angle", "Changed angle final rotation angle"]]
     
     var currentlyShowedAlertController: DSAlertController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .lightText
     }
 }
 
@@ -84,32 +85,34 @@ extension ViewController {
             switch indexPath.row {
             case 0: //1.1 Default style
                 self.currentlyShowedAlertController = ExampleProvider.defaultStyle(showedViewController: exampleViewController)
-                self.currentlyShowedAlertController?.show(presenter: self)
             default:
                 break
             }
-        case 1: //Animation
+        case 1: //Alert setup
             switch indexPath.row {
-            case 0: //2.1 Slide animation for present and dismiss
+            case 0: //2.1 Content view size, realtive values
+                self.currentlyShowedAlertController = ExampleProvider.contentSizeRelative(showedViewController: exampleViewController)
+            default:
+                break
+            }
+        case 2: //Animation
+            switch indexPath.row {
+            case 0: //3.1 Slide animation for present and dismiss
                 self.currentlyShowedAlertController = ExampleProvider.slideAnimation(showedViewController: exampleViewController)
-                self.currentlyShowedAlertController?.show(presenter: self)
-            case 1: //2.2 Slide animation with rotation
+            case 1: //3.2 Slide animation with rotation
                 self.currentlyShowedAlertController = ExampleProvider.slideAnimationWithDefaultRotation(showedViewController: exampleViewController)
-                self.currentlyShowedAlertController?.show(presenter: self)
-            case 2: //2.3 Slide animation with rotation angle
+            case 2: //3.3 Slide animation with rotation angle
                 self.currentlyShowedAlertController = ExampleProvider.slideAnimationWithCustomRotation(showedViewController: exampleViewController)
-                self.currentlyShowedAlertController?.show(presenter: self)
-            case 3: //2.4 Final rotation angle
+            case 3: //3.4 Final rotation angle
                 self.currentlyShowedAlertController = ExampleProvider.finalRotationAngle(showedViewController: exampleViewController)
-                self.currentlyShowedAlertController?.show(presenter: self)
             default:
                 break
             }
         default:
             break
         }
+        self.currentlyShowedAlertController?.show(presenter: self)
     }
-
 }
 
 extension ViewController: ExampleViewControllerDelegate {
