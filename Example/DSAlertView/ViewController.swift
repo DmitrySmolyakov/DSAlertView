@@ -11,14 +11,16 @@ import DSAlertView
 
 class ViewController: UITableViewController {
     
-    let sectionTitleArray = ["Default", "Alert setup", "Animation"]
-    let sectionSubtitleArray = ["Simple default style", "UI configuration", "Different styles"]
+    let sectionTitleArray = ["Default", "Alert setup", "Animations", "Features"]
+    let sectionSubtitleArray = ["Simple alert", "Content view configuration", "Different styles", "Other"]
     let titleArray = [["Default style"],
-                      ["Content view size"],
-                      ["Slide animation for present and dismiss", "Slide animation with rotation", "Slide animation with rotation angle", "Final rotation angle"]]
-    let subtitleArray = [["Simple alert with default style"],
-                         ["Relative values"],
-                         ["Simple slide animation", "Default rotation angle", "Slide animation with custom rotation angle", "Changed angle final rotation angle"]]
+                      ["Content view size", "Content view size", "Content view center offset, relative", "Border setup with content view center offset", "Background setup"],
+                      ["Slide animation for present and dismiss", "Slide animation with rotation", "Slide animation with rotation angle"],
+                      ["Close button setup", "Custom close button"]]
+    let subtitleArray = [["Simple alert with default values"],
+                         ["Relative values", "Absolute values", "Added some animation and size changes", "Offset in absolute values", "Background color, alpha, removed dismiss when tap on background"],
+                         ["Simple slide animation", "Default rotation angle", "Slide animation with custom rotation angle"],
+                         ["Added close button with some setup", "Manual setup for close button"]]
     
     var currentlyShowedAlertController: DSAlertController? = nil
     
@@ -92,6 +94,14 @@ extension ViewController {
             switch indexPath.row {
             case 0: //2.1 Content view size, realtive values
                 self.currentlyShowedAlertController = ExampleProvider.contentSizeRelative(showedViewController: exampleViewController)
+            case 1: //2.2 Content view size, absolute values
+                self.currentlyShowedAlertController = ExampleProvider.contentSizeAbsolute(showedViewController: exampleViewController)
+            case 2: //2.3 Content view center offset, relative values
+                self.currentlyShowedAlertController = ExampleProvider.contentCenterOffsetRelative(showedViewController: exampleViewController)
+            case 3: //2.4 Border setup with content view center offset
+                self.currentlyShowedAlertController = ExampleProvider.borderSetup(showedViewController: exampleViewController)
+            case 4: //2.5 Background setup
+                self.currentlyShowedAlertController = ExampleProvider.backgroundSetup(showedViewController: exampleViewController)
             default:
                 break
             }
@@ -103,8 +113,15 @@ extension ViewController {
                 self.currentlyShowedAlertController = ExampleProvider.slideAnimationWithDefaultRotation(showedViewController: exampleViewController)
             case 2: //3.3 Slide animation with rotation angle
                 self.currentlyShowedAlertController = ExampleProvider.slideAnimationWithCustomRotation(showedViewController: exampleViewController)
-            case 3: //3.4 Final rotation angle
-                self.currentlyShowedAlertController = ExampleProvider.finalRotationAngle(showedViewController: exampleViewController)
+            default:
+                break
+            }
+        case 3: //Features
+            switch indexPath.row {
+            case 0: //4.1 Close button setup
+                self.currentlyShowedAlertController = ExampleProvider.closeButtonSetup(showedViewController: exampleViewController)
+            case 1: //4.2 Custom close button
+                self.currentlyShowedAlertController = ExampleProvider.customCloseButton(showedViewController: exampleViewController)
             default:
                 break
             }

@@ -19,5 +19,4 @@ class ExampleViewController: UIViewController {
     @IBAction func okButtonTapped(_ sender: UIButton) {
         delegate?.exampleButtonTapped(exampleViewController: self)
     }
-    
 }

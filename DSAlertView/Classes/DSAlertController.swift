@@ -11,19 +11,166 @@ import SnapKit
 
 open class DSAlertController: UIViewController, DSTransitionAnimation {
     
-    open var presentAnimationDuration: Double = 0.5
-    open var presentAnimationRotationAngle: CGFloat?
-    open var finalRotationAngle: CGFloat?
+    let showedViewController: UIViewController
+    lazy open var contentView: UIView = {
+        let tempContentView = UIView()
+        tempContentView.clipsToBounds = true
+        tempContentView.layer.cornerRadius = self.cornerRadius
+        tempContentView.backgroundColor = self.contentBackgroundColor
+        tempContentView.alpha = self.contentBackgroundAlpha
+        return tempContentView
+    }()
     
-    open var dismissAnimationDuration: Double = 0.25
-    open var dismissAnimationRotationAngle: CGFloat?
+    lazy open var backgroundView: UIView = {
+        let tempBackgroundView = UIView()
+        tempBackgroundView.backgroundColor = self.backgroundColor
+        tempBackgroundView.alpha = self.backgroundViewAlpha
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.onBackViewTap))
+        tempBackgroundView.addGestureRecognizer(tap)
+        return tempBackgroundView
+    }()
     
-    open var hideByTapIsOn: Bool = true
+    lazy open var closeButton: UIButton = {
+        let tempCloseButton = UIButton(type: .custom)
+        tempCloseButton.tintColor = self.closeButtonTintColor
+        tempCloseButton.isHidden = self.closeButtonIsHidden
+        tempCloseButton.setImage(self.getImageFromBundle(name: "closeButton").withRenderingMode(.alwaysTemplate), for: .normal)
+        tempCloseButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
+        return tempCloseButton
+    }()
+    
+    lazy var presentationAnimation: DSPresentationAnimation = {
+        return DSFadePresentationAnimation()
+    }()
+    lazy var dismissingAnimation: DSDismissAnimation = {
+        return DSFadeDismissAnimation()
+    }()
+    
+    // Content view size
+    private struct ContentSizeConstraints {
+        var widthMultiplier: Bool
+        var heightMultiplier: Bool
+        var centerMultiplier: Bool
+    }
+    private var contentSizeConstraints = ContentSizeConstraints(widthMultiplier: true,
+                                                                heightMultiplier: true,
+                                                                centerMultiplier: true)
+    open var widthMultiplier: Double = 0.7 {
+        didSet {
+            contentSizeConstraints.widthMultiplier = true
+            remakeConstraintsForContentView()
+        }
+    }
+    open var width: CGFloat = 250 {
+        didSet {
+            contentSizeConstraints.widthMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var heightMultiplier: Double = 0.6 {
+        didSet {
+            contentSizeConstraints.heightMultiplier = true
+            remakeConstraintsForContentView()
+        }
+    }
+    open var height: CGFloat = 300 {
+        didSet {
+            contentSizeConstraints.heightMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerMultiplierX: Double = 1 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = true
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerOffsetX: CGFloat = 0 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerMultiplierY: Double = 1 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = true
+            remakeConstraintsForContentView()
+        }
+    }
+    open var centerOffsetY: CGFloat = 0 {
+        didSet {
+            contentSizeConstraints.centerMultiplier = false
+            remakeConstraintsForContentView()
+        }
+    }
+    
+    //Setup content view border
+    open var cornerRadius: CGFloat = 25 {
+        didSet {
+            contentView.layer.cornerRadius = cornerRadius
+        }
+    }
+    open var borderWidth: CGFloat = 0 {
+        didSet {
+            contentView.layer.borderWidth = borderWidth
+        }
+    }
+    open var borderColor: UIColor = .black {
+        didSet {
+            contentView.layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    //Content view setup
+    open var finalPositionRotationAngle: CGFloat?
+    open var contentBackgroundColor: UIColor = .clear {
+        didSet {
+            contentView.backgroundColor = contentBackgroundColor
+        }
+    }
+    open var contentBackgroundAlpha: CGFloat = 1 {
+        didSet {
+            contentView.alpha = contentBackgroundAlpha
+        }
+    }
+    
+    //Background view setup
+    open var backgroundColor: UIColor = .black {
+        didSet {
+            backgroundView.backgroundColor = backgroundColor
+        }
+    }
+    open var backgroundViewAlpha: CGFloat = 0.6 {
+        didSet {
+            backgroundView.alpha = backgroundViewAlpha
+        }
+    }
     open var backgroundViewIsHidden = false {
         didSet {
             backgroundView.alpha = backgroundViewIsHidden ? 0 : backgroundViewAlpha
         }
     }
+    open var hideByTapIsOn: Bool = true
+    
+    
+    //Close button setup
+    open var closeButtonIsHidden: Bool = true {
+        didSet {
+            closeButton.isHidden = closeButtonIsHidden
+        }
+    }
+    open var closeButtonTintColor: UIColor = .black {
+        didSet {
+            closeButton.tintColor = closeButtonTintColor
+        }
+    }
+    
+    //animation setup
+    open var presentAnimationDuration: Double = 0.5
+    open var presentAnimationRotationAngle: CGFloat?
+    
+    open var dismissAnimationDuration: Double = 0.25
+    open var dismissAnimationRotationAngle: CGFloat?
     
     open var presentAnimation: Animation = .fade {
         didSet {
@@ -48,144 +195,6 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
                 self.presentationAnimation.delegate = self
             }
         }
-    }
-    
-    let showedViewController: UIViewController
-    lazy open var contentView: UIView = {
-        let tempContentView = UIView()
-        tempContentView.clipsToBounds = true
-        tempContentView.layer.cornerRadius = self.cornerRadius
-        tempContentView.backgroundColor = self.contentBackgroundColor
-        tempContentView.alpha = self.contentBackgroundAlpha
-        return tempContentView
-    }()
-    
-    lazy open var backgroundView: UIView = {
-        let tempBackgroundView = UIView()
-        tempBackgroundView.backgroundColor = self.backgroundColor
-        tempBackgroundView.alpha = self.backgroundViewAlpha
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.onBackViewTap))
-        tempBackgroundView.addGestureRecognizer(tap)
-        return tempBackgroundView
-    }()
-    
-    lazy open var closeButton: UIButton = {
-        let tempCloseButton = UIButton()
-        tempCloseButton.tintColor = self.closeButtonTintColor
-        tempCloseButton.isHidden = self.closeButtonIsHidden
-        tempCloseButton.setImage(self.getImageFromBundle(name: "closeButton").withRenderingMode(.alwaysTemplate), for: .normal)
-        tempCloseButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
-        return tempCloseButton
-    }()
-    
-    lazy var presentationAnimation: DSPresentationAnimation = {
-        return DSFadePresentationAnimation()
-    }()
-    lazy var dismissingAnimation: DSDismissAnimation = {
-        return DSFadeDismissAnimation()
-    }()
-    
-    private var contentSizeConstraints = ContentSizeConstraints(widthMultiplier: true,
-                                                                heightMultiplier: true,
-                                                                centerMultiplier: true)
-    open var widthMultiplier: Double = 0.7 {
-        didSet {
-            contentSizeConstraints.widthMultiplier = true
-            remakeConstraintsForContentView()
-        }
-    }
-    open var heightMultiplier: Double = 0.6 {
-        didSet {
-            contentSizeConstraints.heightMultiplier = true
-            remakeConstraintsForContentView()
-        }
-    }
-    open var centerMultiplierX: Double = 1 {
-        didSet {
-            contentSizeConstraints.centerMultiplier = true
-            remakeConstraintsForContentView()
-        }
-    }
-    open var centerMultiplierY: Double = 1 {
-        didSet {
-            contentSizeConstraints.centerMultiplier = true
-            remakeConstraintsForContentView()
-        }
-    }
-    open var centerOffsetX: CGFloat = 0 {
-        didSet {
-            contentSizeConstraints.centerMultiplier = false
-            remakeConstraintsForContentView()
-        }
-    }
-    open var centerOffsetY: CGFloat = 0 {
-        didSet {
-            contentSizeConstraints.centerMultiplier = false
-            remakeConstraintsForContentView()
-        }
-    }
-    open var width: CGFloat = 250 {
-        didSet {
-            contentSizeConstraints.widthMultiplier = false
-            remakeConstraintsForContentView()
-        }
-    }
-    open var height: CGFloat = 300 {
-        didSet {
-            contentSizeConstraints.heightMultiplier = false
-            remakeConstraintsForContentView()
-        }
-    }
-    open var cornerRadius: CGFloat = 25 {
-        didSet {
-            contentView.layer.cornerRadius = cornerRadius
-        }
-    }
-    open var borderWidth: CGFloat = 0 {
-        didSet {
-            contentView.layer.borderWidth = borderWidth
-        }
-    }
-    open var borderColor: UIColor = .black {
-        didSet {
-            contentView.layer.borderColor = borderColor.cgColor
-        }
-    }
-    open var backgroundColor: UIColor = .black {
-        didSet {
-            backgroundView.backgroundColor = backgroundColor
-        }
-    }
-    open var backgroundViewAlpha: CGFloat = 0.6 {
-        didSet {
-            backgroundView.alpha = backgroundViewAlpha
-        }
-    }
-    open var contentBackgroundColor: UIColor = .clear {
-        didSet {
-            contentView.backgroundColor = contentBackgroundColor
-        }
-    }
-    open var contentBackgroundAlpha: CGFloat = 1 {
-        didSet {
-            contentView.alpha = contentBackgroundAlpha
-        }
-    }
-    open var closeButtonIsHidden: Bool = true {
-        didSet {
-            closeButton.isHidden = closeButtonIsHidden
-        }
-    }
-    open var closeButtonTintColor: UIColor = .black {
-        didSet {
-            closeButton.tintColor = closeButtonTintColor
-        }
-    }
-    
-    private struct ContentSizeConstraints {
-        var widthMultiplier: Bool
-        var heightMultiplier: Bool
-        var centerMultiplier: Bool
     }
     
     // MARK: Initialization
@@ -280,13 +289,6 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
     }
 }
 
-extension Array {
-    mutating func removeObject<T>(obj: T) where T : Equatable {
-        self = self.filter({$0 as? T != obj})
-    }
-    
-}
-
 // MARK: DSPresentationAnimationDelegate
 extension DSAlertController: DSPresentationAnimationDelegate {
     func durationForPresentationAnimation() -> Double {
@@ -298,7 +300,7 @@ extension DSAlertController: DSPresentationAnimationDelegate {
     }
     
     func contentFinalRotationAngleForPresentAnimation() -> CGFloat? {
-        return finalRotationAngle
+        return finalPositionRotationAngle
     }
 }
 
