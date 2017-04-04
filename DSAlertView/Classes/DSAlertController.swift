@@ -16,8 +16,6 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
         let tempContentView = UIView()
         tempContentView.clipsToBounds = true
         tempContentView.layer.cornerRadius = self.cornerRadius
-        tempContentView.backgroundColor = self.contentBackgroundColor
-        tempContentView.alpha = self.contentBackgroundAlpha
         return tempContentView
     }()
     
@@ -79,6 +77,9 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
             remakeConstraintsForContentView()
         }
     }
+    
+    //Content view position
+    open var finalPositionRotationAngle: CGFloat?
     open var centerMultiplierX: Double = 1 {
         didSet {
             contentSizeConstraints.centerMultiplier = true
@@ -118,19 +119,6 @@ open class DSAlertController: UIViewController, DSTransitionAnimation {
     open var borderColor: UIColor = .black {
         didSet {
             contentView.layer.borderColor = borderColor.cgColor
-        }
-    }
-    
-    //Content view setup
-    open var finalPositionRotationAngle: CGFloat?
-    open var contentBackgroundColor: UIColor = .clear {
-        didSet {
-            contentView.backgroundColor = contentBackgroundColor
-        }
-    }
-    open var contentBackgroundAlpha: CGFloat = 1 {
-        didSet {
-            contentView.alpha = contentBackgroundAlpha
         }
     }
     

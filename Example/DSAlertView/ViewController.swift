@@ -62,13 +62,13 @@ extension ViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell") ?? UITableViewCell.init(style: .subtitle, reuseIdentifier: "UITableViewCell")
         
         cell.textLabel?.textColor = UIColor.init(white: 0.0, alpha: 0.6)
-        cell.textLabel?.font = UIFont.init(name: "Courier-Regular", size: 14.0)
+        cell.textLabel?.font = UIFont.init(name: "Helvetica-Regular", size: 14.0)
         cell.textLabel?.lineBreakMode = .byCharWrapping
         cell.textLabel?.text = "\(indexPath.section + 1).\(indexPath.row + 1) \(titleArray[indexPath.section][indexPath.row])"
         cell.textLabel?.numberOfLines = 2
         
         cell.detailTextLabel?.textColor = UIColor.init(white: 0.0, alpha: 0.5)
-        cell.detailTextLabel?.font = UIFont.init(name: "Courier-Regular", size: 11.0)
+        cell.detailTextLabel?.font = UIFont.init(name: "Helvetica-Regular", size: 11.0)
         cell.detailTextLabel?.text = "\(subtitleArray[indexPath.section][indexPath.row])"
         cell.detailTextLabel?.numberOfLines = 2
         
